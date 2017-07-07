@@ -1,0 +1,4 @@
+obj=server.o kbz-event.o util.o
+
+server:${obj}
+    cc -o server ${obj}
