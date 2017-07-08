@@ -3,7 +3,8 @@ Send and recv event between processes/threads in very few lines of codes.
   * Unlimited buffer size 
   * WITHOUT any initialization or daemon process.
   * Fast and simple
-
+  * use semaphore and share memory
+      
 Usage:
 
 server.c
