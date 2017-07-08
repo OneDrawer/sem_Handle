@@ -51,7 +51,7 @@ server.c
         if (kbz_event_get(123, &buf, &len, 0) == 0) {
          char ans[128];
          sprintf(ans, "time now is %d", time(NULL));
-         kbz_ack_event(123, buf, ans, strlen(ans)+1);
+         kbz_event_ack(123, buf, ans, strlen(ans)+1);
         }
       }
       

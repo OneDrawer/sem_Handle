@@ -357,7 +357,7 @@ static post_t *proc_get_post(chan_t *ch, proc_t *p, check_post_cb_t cb, void *cb
 	return NULL;
 }
 
-/*
+/* push the semaphore out of the queue 
  */
 static int wait_post(
 	int chan_id, int timeout, void **out, int *out_len,
@@ -415,6 +415,8 @@ static int wait_post(
 	}
 }
 
+/* the semaphore in the queue post
+ */
 static int enque_post(int chan_id, int type, uint64_t ack_id, void *in, int in_len, post_t *cb) {
 	ctrl_t *c = ctrl_get();
 	if (c == NULL)
@@ -455,6 +457,8 @@ static int enque_post(int chan_id, int type, uint64_t ack_id, void *in, int in_l
 	return 0;
 }
 
+/* check the post's type is POST or PUSH
+ */
 static int post_is_normal(post_t *p, void *_) {
 	return !(p->type == POST || p->type == PUSH);
 }
@@ -465,11 +469,14 @@ static int post_is_normal(post_t *p, void *_) {
  * out_len: buffer's length
  * timeout: time out
  *
+ * the function is a get a semaphore buffer.
  **/
 int kbz_event_get(int chan_id, void **out, int *out_len, int timeout) {
 	return wait_post(chan_id, timeout, out, out_len, NULL, post_is_normal, NULL);
 }
 
+/* post event to the channel of chan_id.
+ */
 int kbz_event_post(int chan_id, void *in, int in_len) {
 	return enque_post(chan_id, POST, 0, in, in_len, NULL);
 }
@@ -486,6 +493,8 @@ static int push_check_post(post_t *po, void *_) {
 	return !(po->type == ACK && po->ack_id == po_push->id);
 }
 
+/* push a event to the channel and wait for it's answer.
+ */
 int kbz_event_push(int chan_id, void *in, int in_len, void **out, int *out_len, int timeout) {
 	log("chan=%d in_len=%d", chan_id, in_len);
 	post_t po;
@@ -493,6 +502,8 @@ int kbz_event_push(int chan_id, void *in, int in_len, void **out, int *out_len, 
 	return wait_post(chan_id, timeout, out, out_len, push_check_proc, push_check_post, &po);
 }
 
+/* answer the event.
+ */
 int kbz_event_ack(void *in, void *out, int out_len) {
 	post_t *po = (post_t *)(in - sizeof(post_t));
 	if (po->type != PUSH)
