@@ -77,4 +77,11 @@ Build Requirements:
     gcc version > 4.6
     Linux
     
-
+Library function:
+    sem_open(): open a semaphore.
+    sem_close(): close a semaphore.
+    sem_unlink(): delete a semaphore.
+    sem_wait(): test a firm semaphore, if greater than 0, then sub 1, if equal 0,then sleep.
+    sem_post(): add 1 to semaphore value.
+    sem_getvalue(): get the value of semaphore.
+    
