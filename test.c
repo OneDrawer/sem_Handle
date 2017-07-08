@@ -93,7 +93,7 @@ static void test(int n) {
 
 		case 6: {
 			log("test sem");
-			sem_t *s = sem_open("kbz.123123", O_CREAT|O_EXCL, 0777, 0);
+			sem_t *s = sem_open("joe.123123", O_CREAT|O_EXCL, 0777, 0);
 			log("sem: %p", s);
 			break;
 		}

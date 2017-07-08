@@ -1,5 +1,5 @@
-#include <kbz-event.h>
+#include <sem-event.h>
 
 void main() {
-    kbz_event_post(123, "hello", 6);
+    sem_event_post(123, "hello", 6);
 }

@@ -1,4 +1,4 @@
-obj=server.o kbz-event.o util.o
+obj=server.o sem_event.o util.o
 
 server:${obj}
     cc -o server ${obj}
